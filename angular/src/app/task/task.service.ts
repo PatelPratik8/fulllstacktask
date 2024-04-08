@@ -17,7 +17,7 @@ export class TaskService {
 
   createList(title: string) {
     // We want to send a web request to create a list
-    return this.webReqService.post('lists', { title });
+    return this.webReqService.post({ title });
   }
 
   updateList(id: string, task: object) {
@@ -25,26 +25,22 @@ export class TaskService {
     return this.webReqService.patch(id, task);
   }
 
-  updateTask(listId: string, taskId: string, title: string) {
-    // We want to send a web request to update a list
-    return this.webReqService.patch(`lists/${listId}/tasks/${taskId}`, {
-      title,
-    });
-  }
-
   deleteTask(id: string) {
     return this.webReqService.delete(id);
   }
 
-  deleteList(id: string) {
-    return this.webReqService.delete(`lists/${id}`);
-  }
+  // deleteList(id: string) {
+  //   return this.webReqService.delete(`lists/${id}`);
+  // }
 
-  getTasks(listId: string) {
-    return this.webReqService.get(`lists/${listId}/tasks`);
-  }
+  // getTasks(listId: string) {
+  //   return this.webReqService.get(`lists/${listId}/tasks`);
+  // }
 
-  createTask(title: string) {
-    return this.webReqService.post("", { title });
+  createTask(data: object) {
+    return this.webReqService.post(data);
+  }
+  excelUpload(data: any) {
+    return this.webReqService.postFile('import', data);
   }
 }

@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 export const initialize = () => {
   let uri: string = process.env.DB_URI || "";
 
+
   return mongoose
     .connect(uri)
     .then(() => {
@@ -16,6 +17,8 @@ export const initialize = () => {
       console.info("not able to connect with mongoDB, existing process");
       process.exit(0);
     });
+
+
 };
 
 

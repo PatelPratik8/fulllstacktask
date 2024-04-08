@@ -16,4 +16,7 @@ router.delete("/:id", TaskController.deleteTask);
 
 router.post("/upload", upload.single("demo"), TaskController.addFile);
 
+router.post("/import", upload.single("excel"), TaskController.uploadXlsx);
+
+
 export default router;

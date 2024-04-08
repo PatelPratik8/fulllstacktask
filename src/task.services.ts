@@ -3,6 +3,9 @@ import { Task, TaskModel } from "./task.model";
 function create(data: Task): Promise<Task> {
   return TaskModel.create(data);
 }
+function createMany(data: Task[]): Promise<Task[]> {
+  return TaskModel.insertMany(data);
+}
 async function update(id: string, data: Task): Promise<Task | null> {
   await TaskModel.updateOne({ _id: id }, data);
   return TaskModel.findById(id);
@@ -38,4 +41,5 @@ export default {
   find,
   deleteTask,
   upload,
+  createMany
 };

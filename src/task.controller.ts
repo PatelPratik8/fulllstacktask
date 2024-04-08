@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Task } from "./task.model";
 import TaskService from "./task.services";
 import comResponse from "../helper/response";
+import { readFile, utils } from "xlsx";
 
 async function create(req: Request, res: Response) {
   try {
@@ -69,6 +70,28 @@ async function addFile(req: any, res: Response) {
   }
 }
 
+async function uploadXlsx(req: any, res: Response) {
+  try {
+    var workbook = readFile(req.file.path);
+    var sheet_name_list = workbook.SheetNames;
+    var xlData = utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+    console.log(xlData);
+    let task: Task[] = [];
+    xlData.forEach((e: any) => {
+      if (e.title) {
+        task.push({
+          title: e.title,
+          text: e.text,
+        });
+      }
+    });
+    if (task.length) await TaskService.createMany(task);
+    return comResponse.success(res, {}, "xlsx file update");
+  } catch (error) {
+    return comResponse.internalServerError(res, error);
+  }
+}
+
 export default {
   create,
   get,
@@ -76,4 +99,5 @@ export default {
   update,
   deleteTask,
   addFile,
+  uploadXlsx,
 };

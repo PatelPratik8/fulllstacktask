@@ -2,6 +2,10 @@
 <div *ngFor="let item of tasks"> 
   <input type="text"  [disabled]="item.isDisabled" [(ngModel)]="item.title"> 
     <textarea [disabled]="item.isDisabled" [(ngModel)]="item.text"></textarea>
+    <input
+  type="checkbox" [disabled]="item.isDisabled"
+  [checked]="item.completed"
+  (change)="item.completed = !item.completed"/>
     <button (click)="edit(item._id)" *ngIf="item.isDisabled">Edit</button>
     <button (click)="update(item._id,item)" *ngIf="!item.isDisabled">update</button>
   <button (click)="deleteTask(item._id)">Delete</button>
@@ -11,6 +15,21 @@
 <br/>
 <br/>
 <div>
-    <input type="text" [(ngModel)]="newTask">
-    <button (click)="add(newTask)">add</button>
+    <input type="text" [(ngModel)]="newTaskTitle">
+    <textarea [(ngModel)]="newTaskText"></textarea>
+    <button (click)="add()">add</button>
+</div>
+<br/>
+<br/>
+<input type="file" class="file-input"
+       (change)="onFileSelected($event)" #fileUpload>
+
+<div class="file-upload">
+
+   {{fileName || "No file uploaded yet."}}
+
+    <button mat-mini-fab color="primary" class="upload-btn"
+      (click)="fileUpload.click()">
+        <!-- <mat-icon>attach_file</mat-icon> -->
+    </button>
 </div>
