@@ -16,6 +16,7 @@ export class TaskComponent {
   newTaskTitle: string = '';
   newTaskText: string = '';
   fileName = '';
+  status="new"
   updateTask(tasks: any[]) {
     return tasks.map((e) => {
       e.isDisabled = true;
@@ -74,6 +75,7 @@ export class TaskComponent {
         this.tasks.push(newTaskDate);
         this.newTaskTitle = '';
         this.newTaskText = '';
+        this.status='view'
       });
   }
   onFileSelected(event: any) {
@@ -90,9 +92,13 @@ export class TaskComponent {
       this.taskService.excelUpload(formData).subscribe((data: any) => {
         // this.tasks = this.updateTask(data.data);
         alert('file upload successfully');
+        this.status='view'
       });
 
       // upload$.subscribe();
     }
+  }
+  updateStatus(str:string){
+    this.status = str
   }
 }

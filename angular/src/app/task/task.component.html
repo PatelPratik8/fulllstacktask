@@ -1,35 +1,109 @@
-<label> List</label>
-<div *ngFor="let item of tasks"> 
-  <input type="text"  [disabled]="item.isDisabled" [(ngModel)]="item.title"> 
+<style>
+  /* Common styles */
+  button {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+
+  /* Button styles */
+  .new-task-btn {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  .manage-task-btn {
+    background-color: #2196F3;
+    color: white;
+  }
+
+  .upload-task-btn {
+    background-color: #3936f4;
+    color: white;
+  }
+  .new-del-task-btn{
+    background-color: #f44336;
+    color: white;
+  }
+  /* List item styles */
+  .list-item {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    max-width: 50%;
+  }
+
+  .list-item input[type="text"],
+  .list-item textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    resize: vertical;
+  }
+
+  .list-item button {
+    margin-right: 5px;
+  }
+
+  /* File upload styles */
+  .file-input {
+    display: none;
+  }
+
+  .file-upload {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .file-upload:hover {
+    background-color: #f0f0f0;
+  }
+
+  .upload-btn {
+    margin-left: 10px;
+  }
+
+  .file-name {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+</style>
+
+<button class="new-task-btn" (click)="updateStatus('new')">Add New Task</button>
+<button class="manage-task-btn" (click)="updateStatus('view')">Manage Task</button>
+<button class="upload-task-btn" (click)="updateStatus('upload')">Upload Task</button>
+
+<div class="list-item" *ngIf="status === 'new'">
+  <input type="text" [(ngModel)]="newTaskTitle">
+  <textarea [(ngModel)]="newTaskText"></textarea>
+  <button class="new-task-btn" (click)="add()">Add New Task</button>
+</div>
+
+<div *ngIf="status === 'view'">
+  <div *ngFor="let item of tasks" class="list-item">
+    <input type="text" [disabled]="item.isDisabled" [(ngModel)]="item.title">
     <textarea [disabled]="item.isDisabled" [(ngModel)]="item.text"></textarea>
-    <input
-  type="checkbox" [disabled]="item.isDisabled"
-  [checked]="item.completed"
-  (change)="item.completed = !item.completed"/>
-    <button (click)="edit(item._id)" *ngIf="item.isDisabled">Edit</button>
-    <button (click)="update(item._id,item)" *ngIf="!item.isDisabled">update</button>
-  <button (click)="deleteTask(item._id)">Delete</button>
+    <input type="checkbox" [disabled]="item.isDisabled" [checked]="item.completed" (change)="item.completed = !item.completed">
+    <button class="new-task-btn" (click)="edit(item._id)" *ngIf="item.isDisabled">Edit Task</button>
+    <button class="new-task-btn" (click)="update(item._id, item)" *ngIf="!item.isDisabled">Update Task</button>
+    <button class="new-del-task-btn" (click)="deleteTask(item._id)">Delete Task</button>
+  </div>
 </div>
-<br/>
-<br/>
-<br/>
-<br/>
-<div>
-    <input type="text" [(ngModel)]="newTaskTitle">
-    <textarea [(ngModel)]="newTaskText"></textarea>
-    <button (click)="add()">add</button>
-</div>
-<br/>
-<br/>
-<input type="file" class="file-input"
-       (change)="onFileSelected($event)" #fileUpload>
 
-<div class="file-upload">
-
-   {{fileName || "No file uploaded yet."}}
-
-    <button mat-mini-fab color="primary" class="upload-btn"
-      (click)="fileUpload.click()">
-        <!-- <mat-icon>attach_file</mat-icon> -->
-    </button>
+<div *ngIf="status === 'upload'">
+  <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+  <div class="file-upload" (click)="fileUpload.click()">
+    <div class="file-name">{{ fileName || "No file uploaded yet." }}</div>
+    <button class="upload-btn">Upload</button>
+  </div>
 </div>
