@@ -1,0 +1,84 @@
+button {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+
+  /* Button styles */
+  .new-task-btn {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  .manage-task-btn {
+    background-color: #2196F3;
+    color: white;
+  }
+
+  .upload-task-btn {
+    background-color: #3936f4;
+    color: white;
+  }
+  .new-del-task-btn{
+    background-color: #f44336;
+    color: white;
+  }
+  /* List item styles */
+  .list-item {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    max-width: 60%;
+  }
+
+  .list-item input[type="text"],
+  .list-item textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    resize: vertical;
+  }
+
+  .list-item button {
+    margin-right: 5px;
+  }
+  .pdf-file-input{
+    display: none;
+  }
+  /* File upload styles */
+  .file-input {
+    display: none;
+    max-width: 50%;
+  }
+
+  .file-upload {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    max-width: 50%;
+    margin: 50px 0 0 0;
+  }
+
+  .file-upload:hover {
+    background-color: #f0f0f0;
+  }
+
+  .upload-btn {
+    margin-left: 10px;
+  }
+  .pdf-upload-btn{
+    margin-left: 0;
+  }
+  .file-name {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }

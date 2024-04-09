@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { TaskService } from './task.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-task',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './task.component.html',
-  styleUrl: './task.component.less',
+  styleUrl: './task.component.css',
 })
 export class TaskComponent {
   constructor(private taskService: TaskService) {}
@@ -16,7 +17,7 @@ export class TaskComponent {
   newTaskTitle: string = '';
   newTaskText: string = '';
   fileName = '';
-  status="new"
+  status="new";
   updateTask(tasks: any[]) {
     return tasks.map((e) => {
       e.isDisabled = true;
@@ -101,4 +102,33 @@ export class TaskComponent {
   updateStatus(str:string){
     this.status = str
   }
+  uploadDoc(id:string,event: any){
+    const file: File = event.target.files[0];
+
+    if (file) {
+      this.fileName = file.name;
+
+      const formData = new FormData();
+
+      formData.append('pdf', file);
+      formData.append('id', id);
+
+      // const upload$ = this.http.post("/api/thumbnail-upload", formData);
+      this.taskService.pdfUpload(formData).subscribe((data: any) => {
+        // this.tasks = this.updateTask(data.data);
+        alert('file upload successfully');
+        this.status='view'
+      });
+
+      // upload$.subscribe();
+    }
+  }
+  download(id:string){
+    this.taskService.download(id).subscribe((data:any) => {
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(data);
+      link.download = 'file.pdf'; // Replace with desired file name
+      link.click();
+  })
+}
 }

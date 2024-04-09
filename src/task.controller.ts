@@ -3,6 +3,7 @@ import { Task } from "./task.model";
 import TaskService from "./task.services";
 import comResponse from "../helper/response";
 import { readFile, utils } from "xlsx";
+import { readFileSync } from "fs";
 
 async function create(req: Request, res: Response) {
   try {
@@ -91,7 +92,20 @@ async function uploadXlsx(req: any, res: Response) {
     return comResponse.internalServerError(res, error);
   }
 }
-
+async function download(req: Request, res: Response) {
+  try {
+    let taskInfo : any= await TaskService.findById(req.params.id);
+    console.log('./'+taskInfo?.file);
+    
+    if(taskInfo?.file) {
+      let file = readFileSync('./'+taskInfo?.file);
+      return res.status(200).send(file)
+    }
+    return comResponse.success(res, taskInfo, "Task info");
+  } catch (error) {
+    return comResponse.internalServerError(res, error);
+  }
+}
 export default {
   create,
   get,
@@ -100,4 +114,5 @@ export default {
   deleteTask,
   addFile,
   uploadXlsx,
+  download
 };

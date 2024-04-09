@@ -1,83 +1,3 @@
-<style>
-  /* Common styles */
-  button {
-    padding: 5px 10px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-right: 10px;
-  }
-
-  /* Button styles */
-  .new-task-btn {
-    background-color: #4CAF50;
-    color: white;
-  }
-
-  .manage-task-btn {
-    background-color: #2196F3;
-    color: white;
-  }
-
-  .upload-task-btn {
-    background-color: #3936f4;
-    color: white;
-  }
-  .new-del-task-btn{
-    background-color: #f44336;
-    color: white;
-  }
-  /* List item styles */
-  .list-item {
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    max-width: 50%;
-  }
-
-  .list-item input[type="text"],
-  .list-item textarea {
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    resize: vertical;
-  }
-
-  .list-item button {
-    margin-right: 5px;
-  }
-
-  /* File upload styles */
-  .file-input {
-    display: none;
-  }
-
-  .file-upload {
-    display: flex;
-    align-items: center;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  .file-upload:hover {
-    background-color: #f0f0f0;
-  }
-
-  .upload-btn {
-    margin-left: 10px;
-  }
-
-  .file-name {
-    flex: 1;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-</style>
 
 <button class="new-task-btn" (click)="updateStatus('new')">Add New Task</button>
 <button class="manage-task-btn" (click)="updateStatus('view')">Manage Task</button>
@@ -97,6 +17,15 @@
     <button class="new-task-btn" (click)="edit(item._id)" *ngIf="item.isDisabled">Edit Task</button>
     <button class="new-task-btn" (click)="update(item._id, item)" *ngIf="!item.isDisabled">Update Task</button>
     <button class="new-del-task-btn" (click)="deleteTask(item._id)">Delete Task</button>
+    <div (click)="fileUpload1.click()" *ngIf="!item.file">
+    <input type="file" class="pdf-file-input" (change)="uploadDoc(item._id,$event)" #fileUpload1>
+    <button class="pdf-upload-btn">Upload</button>
+    </div>
+    <div *ngIf="item.file"> 
+      <button (click)="download(item._id)">
+        download
+    </button>  
+  </div>
   </div>
 </div>
 

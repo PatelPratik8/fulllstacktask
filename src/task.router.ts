@@ -14,7 +14,9 @@ router.patch("/:id", TaskController.update);
 
 router.delete("/:id", TaskController.deleteTask);
 
-router.post("/upload", upload.single("demo"), TaskController.addFile);
+router.post("/upload", upload.single("pdf"), TaskController.addFile);
+
+router.get("/download/:id", TaskController.download);
 
 router.post("/import", upload.single("excel"), TaskController.uploadXlsx);
 

@@ -43,4 +43,10 @@ export class TaskService {
   excelUpload(data: any) {
     return this.webReqService.postFile('import', data);
   }
+  pdfUpload(data: any) {
+    return this.webReqService.postFile('upload', data);
+  }
+  download(id: any) {
+    return this.webReqService.download(id);
+  }
 }

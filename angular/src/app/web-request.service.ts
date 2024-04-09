@@ -14,6 +14,7 @@ export class WebRequestService {
   get(id: string) {
     return this.http.get(`${this.ROOT_URL}/${id}`);
   }
+
   getList() {
     return this.http.get(`${this.ROOT_URL}`);
   }
@@ -31,5 +32,8 @@ export class WebRequestService {
 
   delete(uri: string) {
     return this.http.delete(`${this.ROOT_URL}/${uri}`);
+  }
+  download(id: string) {
+    return this.http.get(`${this.ROOT_URL}/download/${id}`,{ responseType: 'blob' })
   }
 }
